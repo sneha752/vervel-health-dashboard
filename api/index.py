@@ -7,7 +7,7 @@ import json # For loading doctors.json
 # and due to the ephemeral nature of serverless functions (no persistent SQLite).
 
 # --- Flask App Setup ---
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 # Set a secret key for session management from Vercel Environment Variables.
 # IMPORTANT: This must be set securely in Vercel project settings.
 app.secret_key = os.environ.get('SECRET_KEY') 
