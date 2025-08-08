@@ -2,7 +2,7 @@
 const chatForm = document.getElementById('chat-form');
 const userInput = document.getElementById('user-input');
 const chatWindow = document.getElementById('chat-window');
-const reportUpload = document.getElementById('report-upload');
+const reportUpload = document.getElementById('report-upload'); // Still exists but disabled
 const reportSummary = document.getElementById('report-summary');
 const dietPlanList = document.getElementById('diet-plan');
 const habitsList = document.getElementById('habits-list');
@@ -11,7 +11,7 @@ const healthChart = document.getElementById('health-chart');
 const logoutButton = document.getElementById('logout-button');
 const userIdDisplay = document.getElementById('user-id-display');
 
-// Smartwatch elements
+// Smartwatch elements (still exist but disabled)
 const smartwatchUpload = document.getElementById('smartwatch-upload');
 const smartwatchUploadMessage = document.getElementById('smartwatch-upload-message');
 const smartwatchSummary = document.getElementById('smartwatch-summary');
@@ -63,141 +63,41 @@ chatForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Handle health report file upload
+// Handle report file upload (Will just show a disabled message)
 reportUpload.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const formData = new FormData(); 
-    formData.append('file', file); 
-    reportSummary.textContent = 'Analyzing report, please wait...';
-    dietPlanList.innerHTML = '';
-    habitsList.innerHTML = '';
-    healthChart.classList.add('hidden'); // Hide chart while loading
-    
-    try {
-        const response = await fetch('/upload-report', {
-            method: 'POST',
-            body: formData,
-        });
-        const data = await response.json();
-        if (response.ok) {
-            reportSummary.textContent = data.summary;
-            healthRisk.textContent = `Health Risk: ${data.health_risk.toUpperCase()}`;
-            
-            data.diet_plan.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                dietPlanList.appendChild(li);
-            });
-            
-            data.habits.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                habitsList.appendChild(li);
-            });
-
-            if (data.chart_url) {
-                healthChart.src = data.chart_url;
-                healthChart.classList.remove('hidden');
-            }
-        } else {
-            reportSummary.textContent = `Error: ${data.error}`;
-            healthRisk.textContent = '';
-        }
-    } catch (error) {
-        console.error('Error uploading file:', error);
-        reportSummary.textContent = 'Error uploading report. Please try again.';
-        healthRisk.textContent = '';
-    }
+    reportSummary.textContent = 'Health report analysis is disabled in this deployment.';
+    healthRisk.textContent = '';
+    dietPlanList.innerHTML = '<li>Feature disabled in this deployment.</li>';
+    habitsList.innerHTML = '<li>Feature disabled in this deployment.</li>';
+    healthChart.classList.add('hidden');
 });
 
-// Handle smartwatch data upload
+// Handle smartwatch data upload (Will just show a disabled message)
 smartwatchUpload.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    smartwatchUploadMessage.textContent = 'Uploading and processing smartwatch data...';
-    smartwatchSummary.textContent = 'Loading smartwatch data summary...';
-
-    const formData = new FormData(); 
-    formData.append('file', file); 
-
-    try {
-        const response = await fetch('/upload-smartwatch-data', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            smartwatchUploadMessage.textContent = data.message;
-            if (data.summary) {
-                let summaryText = '';
-                if (data.summary.type === 'activity_data') {
-                    summaryText = `
-                        <strong>Activity Data Summary:</strong><br>
-                        Average Daily Steps: ${data.summary.average_daily_steps.toFixed(0)}<br>
-                        Average Daily Calories: ${data.summary.average_daily_calories.toFixed(0)}<br>
-                        Total Very Active Minutes: ${data.summary.total_very_active_minutes}<br>
-                        Total Sedentary Minutes: ${data.summary.total_sedentary_minutes}
-                    `;
-                } else if (data.summary.type === 'generic_smartwatch_data') {
-                    summaryText = `
-                        <strong>Generic Smartwatch Data Summary:</strong><br>
-                        Average Heart Rate: ${data.summary.average_heart_rate.toFixed(1)} bpm<br>
-                        Total Steps: ${data.summary.total_steps}
-                    `;
-                }
-                smartwatchSummary.innerHTML = summaryText; // Use innerHTML for formatted text
-            }
-        } else {
-            smartwatchUploadMessage.textContent = `Error: ${data.error}`;
-            smartwatchSummary.textContent = 'Failed to load smartwatch data.';
-        }
-    } catch (error) {
-        console.error('Error uploading smartwatch data:', error);
-        smartwatchUploadMessage.textContent = 'Error uploading smartwatch data. Please try again.';
-        smartwatchSummary.textContent = 'Failed to load smartwatch data.';
-    }
+    smartwatchUploadMessage.textContent = 'Smartwatch data analysis is disabled in this deployment.';
+    smartwatchSummary.textContent = 'Smartwatch data analysis is disabled.';
 });
 
 
-// Handle Logout
+// Handle Logout (Simulated)
 if (logoutButton) {
     logoutButton.addEventListener('click', async () => {
-        try {
-            const response = await fetch('/logout', { method: 'POST' });
-            if (response.ok) {
-                window.location.href = '/login'; // Redirect to login page after logout
-            } else {
-                console.error('Logout failed.');
-            }
-        } catch (error) {
-            console.error('Error during logout:', error);
-        }
+        // Clear local storage or session if used for client-side persistence (optional)
+        // localStorage.removeItem('user_id'); 
+        console.log("Simulating logout. No persistent server-side session.");
+        window.location.href = '/login'; // Redirect to login page after logout
     });
 }
 
-// Fetch user ID on page load for the dashboard
+// Check login status on page load (Simulated)
 document.addEventListener('DOMContentLoaded', async () => {
-    if (userIdDisplay) {
-        try {
-            const response = await fetch('/get-user-id');
-            const data = await response.json();
-            if (response.ok && data.userId) {
-                userIdDisplay.textContent = `User ID: ${data.userId}`;
-            } else {
-                userIdDisplay.textContent = 'User ID: Not logged in';
-                if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
-                    window.location.href = '/login';
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching user ID:', error);
-            userIdDisplay.textContent = 'User ID: Error';
-            if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
-                window.location.href = '/login';
-            }
-        }
-    }
+    // For Vercel free tier, there's no persistent server-side user ID.
+    // The dashboard will always be accessible if direct navigation is allowed,
+    // or you can implement a simple client-side check if a 'login' was simulated.
+    userIdDisplay.textContent = 'User ID: Not Persistent (Login simulated)';
+    // If you always want to force users through the login page (even if simulated),
+    // you can uncomment this:
+    // if (window.location.pathname === '/' && !localStorage.getItem('simulated_login')) {
+    //     window.location.href = '/login';
+    // }
 });

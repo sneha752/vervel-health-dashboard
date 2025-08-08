@@ -19,9 +19,11 @@
         <div class="flex-1 flex flex-col p-6 border-r border-gray-200">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">🤖 HealthBot</h2>
+                <!-- Logout button behavior will be simulated, no actual server-side logout for persistence -->
                 <button id="logout-button" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">Logout</button>
             </div>
-            <p id="user-id-display" class="text-sm text-gray-600 mb-4">User ID: Loading...</p>
+            <!-- User ID display will show a non-persistent message -->
+            <p id="user-id-display" class="text-sm text-gray-600 mb-4">User ID: Not Persistent</p> 
 
             <div id="chat-window" class="flex-1 overflow-y-auto space-y-4 p-4 rounded-lg bg-gray-50 border border-gray-200">
                 <div class="flex items-start space-x-2">
@@ -43,53 +45,52 @@
         <div class="flex-1 flex flex-col p-6">
             <h2 class="text-2xl font-bold mb-4 text-center">Your Health Dashboard</h2>
 
-            <!-- Report Upload Section -->
+            <!-- Report Upload Section (Will show disabled message) -->
             <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-lg text-center bg-gray-50">
-                <p class="mb-2 text-gray-600">Upload your health report to get a detailed analysis.</p>
-                <label for="report-upload" class="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                    Upload Health Report
+                <p class="mb-2 text-gray-600">Health report analysis is disabled in this deployment.</p>
+                <label for="report-upload" class="cursor-not-allowed bg-gray-400 text-white px-4 py-2 rounded-lg">
+                    Upload Health Report (Disabled)
                 </label>
-                <input type="file" id="report-upload" class="hidden">
+                <input type="file" id="report-upload" class="hidden" disabled>
             </div>
 
-            <!-- NEW: Smartwatch Data Upload Section -->
+            <!-- Smartwatch Data Upload Section (Will show disabled message) -->
             <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-lg text-center bg-gray-50">
-                <p class="mb-2 text-gray-600">Upload your smartwatch data (CSV) for personalized insights.</p>
-                <label for="smartwatch-upload" class="cursor-pointer bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
-                    Upload Smartwatch Data
+                <p class="mb-2 text-gray-600">Smartwatch data analysis is disabled in this deployment.</p>
+                <label for="smartwatch-upload" class="cursor-not-allowed bg-gray-400 text-white px-4 py-2 rounded-lg">
+                    Upload Smartwatch Data (Disabled)
                 </label>
-                <input type="file" id="smartwatch-upload" class="hidden" accept=".csv">
+                <input type="file" id="smartwatch-upload" class="hidden" accept=".csv" disabled>
                 <p id="smartwatch-upload-message" class="mt-2 text-sm text-gray-600"></p>
             </div>
-            <!-- END NEW Smartwatch Data Upload Section -->
-
+            
             <div id="personalized-dashboard" class="flex-1 overflow-y-auto space-y-6">
                 <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
                     <h3 class="text-lg font-semibold mb-2">Health Report Summary</h3>
                     <p id="health-risk" class="text-gray-700 font-bold"></p>
-                    <p id="report-summary" class="text-gray-700">Upload a report to see your summary here.</p>
+                    <p id="report-summary" class="text-gray-700">Health report analysis is disabled. Uploading will not work.</p>
                     
                     <div id="chart-container" class="mt-4">
                         <img id="health-chart" src="" alt="Health Vitals Chart" class="w-full h-auto hidden">
                     </div>
                 </div>
 
-                <!-- NEW: Smartwatch Data Summary Section -->
                 <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
                     <h3 class="text-lg font-semibold mb-2">Smartwatch Data Summary</h3>
-                    <p id="smartwatch-summary" class="text-gray-700">Upload smartwatch data to see summary here.</p>
+                    <p id="smartwatch-summary" class="text-gray-700">Smartwatch data analysis is disabled. Uploading will not work.</p>
                 </div>
-                <!-- END NEW Smartwatch Data Summary Section -->
 
                 <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
                     <h3 class="text-lg font-semibold mb-2">Diet Plan</h3>
                     <ul id="diet-plan" class="list-disc list-inside text-gray-700">
+                        <li>Feature disabled in this deployment.</li>
                     </ul>
                 </div>
 
                 <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
                     <h3 class="text-lg font-semibold mb-2">Recommended Habits</h3>
                     <ul id="habits-list" class="list-disc list-inside text-gray-700">
+                        <li>Feature disabled in this deployment.</li>
                     </ul>
                 </div>
             </div>
