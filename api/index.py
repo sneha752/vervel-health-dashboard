@@ -7,7 +7,7 @@ import json # For loading doctors.json
 # and due to the ephemeral nature of serverless functions (no persistent SQLite).
 
 # --- Flask App Setup ---
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__) # Keep this simple, Flask will find templates/static at project root
 # Set a secret key for session management from Vercel Environment Variables.
 # IMPORTANT: This must be set securely in Vercel project settings.
 app.secret_key = os.environ.get('SECRET_KEY') 
@@ -24,12 +24,11 @@ app.secret_key = os.environ.get('SECRET_KEY')
 
 # --- Load Doctor Data ---
 # Loads doctor information from a local JSON file.
-# Ensure 'doctors.json' is located directly in your project's root directory,
-# alongside 'api/' and 'templates/'.
+# Ensure 'doctors.json' is located directly in your project's root directory.
 DOCTORS_FILE = 'doctors.json'
 doctors_data = []
-# It's safer to use app.root_path for file access in Flask deployments
-doctor_json_path = os.path.join(app.root_path, DOCTORS_FILE)
+# IMPORTANT: Adjust path for doctors.json as it's now at the project root level
+doctor_json_path = os.path.join(app.root_path, DOCTORS_FILE) 
 if os.path.exists(doctor_json_path):
     try:
         with open(doctor_json_path, 'r') as f:
