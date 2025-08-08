@@ -1,0 +1,28 @@
+# Python specific ignores
+    __pycache__/
+    *.pyc
+    .Python/
+    .ipynb_checkpoints/
+    venv/
+    *.env
+    .env/
+
+    # Database file
+    health_data.db
+
+    # Generated matplotlib charts
+    static/*.png
+
+    # Large data files / documents - Ensure these are listed
+    dailyActivity_merged.csv
+    heartrate_seconds_merged.csv
+    sleepDay_merged.csv
+    proj.pdf
+
+    # Firebase Admin SDK Key - CRITICAL to ignore
+    *.json # Be careful if you have other necessary JSON files. Better: ibm-project-*.json if that's the only one.
+    # OR, specifically: ibm-project-11bf3-firebase-adminsdk-fbsvc-312ef3f688.json
+
+    # Vercel related
+    .vercel/ # Vercel CLI creates this, you usually want to ignore it
+    
