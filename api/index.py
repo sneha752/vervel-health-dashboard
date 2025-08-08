@@ -221,7 +221,7 @@ def signup():
     """Handles user registration (Non-functional on Vercel without persistent DB)."""
     if request.method == 'POST':
         # These operations would normally save to DB, but are disabled for Vercel's free tier
-        # email = request.json.get('email')
+        # email = request.json.get('email',)
         # password = request.json.get('password')
         return jsonify({"message": "Signup is disabled for this free deployment due to lack of a persistent database."}), 200
     return render_template('signup.html')
